@@ -14,8 +14,8 @@ import java.util.Set;
 @Builder
 @Getter
 @Entity
-@Table(name = "neighborhoods")
-public class Neighborhood {
+@Table(name = "citys")
+public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,11 @@ public class Neighborhood {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "neighborhoods")
-    private Set<City> city;
+    @ManyToMany
+    @JoinTable(
+            name = "cities_neighborhood",
+            joinColumns = @JoinColumn(name = "city_id"),
+            inverseJoinColumns = @JoinColumn(name = "neighborhood_id")
+    )
+    private Set<Neighborhood> neighborhoods;
 }

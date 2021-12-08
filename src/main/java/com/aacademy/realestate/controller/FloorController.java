@@ -34,6 +34,23 @@ public class FloorController {
                 .collect(Collectors.toSet()));
     }
 
+    @GetMapping("/id/{id}")
+    public ResponseEntity<FloorDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(floorConverter.toFloorDto(floorService.findById(id)));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<FloorDto> update(@RequestBody @Valid FloorDto floorDto, @PathVariable Long id) {
+        Floor floor = floorConverter.toFloor(floorDto);
+        Floor update = floorService.update(floor, id);
+        return ResponseEntity.ok(floorConverter.toFloorDto(update));
+    }
+
+    @GetMapping("/number/{number}")
+    public ResponseEntity<FloorDto> findByNumber(@PathVariable Integer number) {
+        return ResponseEntity.ok(floorConverter.toFloorDto(floorService.findByNumber(number)));
+    }
+
     @PostMapping
     public ResponseEntity<FloorDto> save(@RequestBody @Valid FloorDto floorDto) {
         Floor floor = floorConverter.toFloor(floorDto);
